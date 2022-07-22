@@ -9,13 +9,11 @@ This plugin for [Tailwind CSS](https://tailwindcss.com/) and [Ionic](https://ion
 
 ## Installation
 
-First install the plugin in your project.
-
 ```shell
 pnpm add @aparajita/tailwind-ionic
 ```
 
-Then require the plugin in your `tailwind.config.js` file:
+If you only want the default variants and no Ionic theme colors, add the plugin to your `tailwind.config.js` file:
 
 ```javascript
 module.exports = {
@@ -23,13 +21,7 @@ module.exports = {
 }
 ```
 
-If you want to convert Ionic CSS theme variables into Tailwind colors, pass the path to the file containing the theme variables.
-
-```javascript
-module.exports = {
-  plugins: [require('@aparajita/tailwind-ionic')('src/theme/variables.css')]
-}
-```
+If you want to configure the behavior, read on.
 
 ## Usage
 
@@ -40,7 +32,7 @@ The variants in the table below are supported. Variants lower in the list are mo
 Note that you cannot combine variants directly, but you can combine the effect of separate variants.
 
 | Variant           | Target                                               |
-| :---------------- | :--------------------------------------------------- |
+|:------------------|:-----------------------------------------------------|
 | ion-plt-desktop   | Desktop mode                                         |
 | ion-plt-mobile    | Mobile-like device (including browser simulations)   |
 | ion-plt-mobileweb | Mobile device simulation mode in a browser           |
@@ -50,9 +42,25 @@ Note that you cannot combine variants directly, but you can combine the effect o
 | ion-ios           | Element or closest parent is in iOS mode             |
 | ion-md            | Element or closest parent is in Material Design mode |
 
+#### Variant options
+
+By default the full variant names as shown above are used. If you would like to use abbreviated variant names without the `ion-` prefix, pass an options object to the plugin:
+
+```javascript
+const ionic = require('@aparajita/tailwind-ionic')
+
+module.exports = {
+  plugins: [ionic({
+    abbreviatedVariants: true
+  })]
+}
+```
+
+#### Examples (with abbreviated variant names)
+
 ```html
 <!-- BAD. Can't combine these variants with others directly. -->
-<ion-label class="ion-plt-native:ion-plt-ios:text-ion-color-primary" />
+<ion-label class="plt-native:plt-ios:text-ion-color-primary" />
 
 <!-- 
   GOOD. Separate variants combine.
@@ -61,19 +69,44 @@ Note that you cannot combine variants directly, but you can combine the effect o
 -->
 <ion-label
   class="
-  ion-plt-native:font-bold
-  ion-plt-ios:text-blue-500
-  ion-plt-android:text-yellow-500
+  plt-native:font-bold
+  plt-ios:text-blue-500
+  plt-android:text-yellow-500
 "
 />
 
 <!-- GOOD. More specific variant overrides. On a real iOS device, red color. -->
-<ion-label class="ion-plt-native:text-blue-500 ion-plt-ios:text-red-500" />
+<ion-label class="plt-native:text-blue-500 plt-ios:text-red-500" />
 ```
 
 ### Theme colors
 
-If passed a valid path to a CSS file containing Ionic theme variables, they are converted into Tailwind theme colors. For example, if the file `variables.css` is this:
+If you pass the plugin a valid path to a CSS file containing Ionic theme variables, they are converted into Tailwind theme colors.
+
+```javascript
+const ionic = require('@aparajita/tailwind-ionic')
+
+module.exports = {
+  plugins: [ionic('src/theme/variables.css')]
+}
+```
+
+You may also pass the path as a `.theme` property of an options object, which you will need to do if you also want to set the `abbreviatedVariant` option. 
+
+```javascript
+const ionic = require('@aparajita/tailwind-ionic')
+
+module.exports = {
+  plugins: [ionic({
+    theme: 'src/theme/variables.css',
+    abbreviatedVariants: true
+  })]
+}
+```
+
+#### Example
+
+If the file `variables.css` is this:
 
 ```css
 /** Ionic CSS Variables **/
@@ -90,7 +123,7 @@ If passed a valid path to a CSS file containing Ionic theme variables, they are 
 }
 ```
 
- then your effective Tailwind config ends up being this:
+then your effective Tailwind config ends up being this:
 
 ```js
 module.exports = {

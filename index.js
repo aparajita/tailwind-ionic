@@ -15,10 +15,17 @@ const variants = [
   'md'
 ]
 
-function addVariants(add) {
-  variants.forEach((variant) => {
+function addVariants(add, options) {
+  const abbreviate = options?.abbreviateVariants
+
+  for (const variant of variants) {
     const parts = variant.split(':')
-    const name = `ion-${parts[0]}`
+    let variantName = parts[0]
+
+    if (!abbreviate) {
+      variantName = 'ion-' + variantName
+    }
+
     let selector = `${parts[1] || parts[0]}`
 
     if (selector.startsWith('plt-')) {
@@ -27,14 +34,21 @@ function addVariants(add) {
       selector = `.${selector} &`
     }
 
-    add(name, selector)
-  })
+    add(variantName, selector)
+  }
 }
 
-function getThemeColors(themePath) {
+function getThemeColors(options) {
   const vars = new Set()
+  let themePath = ''
 
-  if (typeof themePath === 'string') {
+  if (typeof options === 'string') {
+    themePath = options
+  } else if (typeof options === 'object') {
+    themePath = options.theme ?? ''
+  }
+
+  if (themePath) {
     try {
       const theme = fs.readFileSync(themePath, 'utf8')
       postcss.parse(theme).walkDecls(/^--ion-/u, (decl) => {
@@ -65,28 +79,32 @@ function getThemeColors(themePath) {
 }
 
 module.exports = plugin.withOptions(
-  function () {
+  function (options) {
     return function ({ addVariant }) {
-      addVariants(addVariant)
+      addVariants(addVariant, options)
     }
   },
-  function (themePath) {
+  function (options) {
+    const variantOrder = [
+      'plt-desktop',
+      'plt-mobile',
+      'plt-mobileweb',
+      'plt-native',
+      'plt-ios',
+      'plt-android',
+      'ios',
+      'md'
+    ].map((variant) =>
+      options?.abbreviateVariants ? variant : 'ion-' + variant
+    )
+
     return {
       theme: {
         extend: {
-          colors: themePath ? getThemeColors(themePath) : {}
+          colors: options ? getThemeColors(options) : {}
         }
       },
-      variantOrder: [
-        'ion-plt-desktop',
-        'ion-plt-mobile',
-        'ion-plt-mobileweb',
-        'ion-plt-native',
-        'ion-plt-ios',
-        'ion-plt-android',
-        'ion-ios',
-        'ion-md'
-      ]
+      variantOrder
     }
   }
 )
