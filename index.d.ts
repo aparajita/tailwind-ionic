@@ -1,9 +1,5 @@
-declare interface TailWindIonicOptions {
-  theme?: string
-  abbreviateVariants?: boolean
-}
+declare function plugin(
+  options?: string | { theme?: string; abbreviateVariants?: boolean }
+): Function
 
-type TailwindIonicPlugin = (options?: string | TailWindIonicOptions) => void
-
-declare const plugin: TailwindIonicPlugin
 export = plugin
