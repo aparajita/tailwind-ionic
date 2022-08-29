@@ -24,8 +24,8 @@
   "bugs": "https://github.com/aparajita/tailwind-ionic.git/issues",
   "scripts": {
     "lint": "prettier --write '**/*.{js,json}'",
-    "release.check": "pnpm lint && commit-and-tag-version \"$OPTIONS\" --dry-run",
-    "release": "commit-and-tag-version \"$OPTIONS\" && git push --follow-tags && pnpm publish"
+    "release.check": "pnpm lint && commit-and-tag-version \"${OPTIONS:-}\" --dry-run",
+    "release": "commit-and-tag-version \"${OPTIONS:-}\" && git push --follow-tags && pnpm publish"
   },
   "devDependencies": {
     "@aparajita/prettier-config": "^1.0.0",
