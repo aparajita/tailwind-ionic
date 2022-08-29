@@ -1,6 +1,6 @@
 <div class="markdown-body">
 
-# @aparajita/tailwind-ionic
+# @aparajita/tailwind-ionic&nbsp;&nbsp;[![npm version](https://badge.fury.io/js/@aparajita%2Ftailwind-ionic.svg)](https://badge.fury.io/js/@aparajita%2Ftailwind-ionic)
 
 This plugin for [Tailwind CSS](https://tailwindcss.com/) and [Ionic](https://ionic-framework.com) provides several features:
 
@@ -47,6 +47,9 @@ Note that you cannot combine variants directly, but you can combine the effect o
 By default the full variant names as shown above are used. If you would like to use abbreviated variant names without the `ion-` prefix, pass an options object to the plugin:
 
 ```javascript
+/** @type {import('tailwindcss/types').Config} */
+/** @type {import('@aparajita/tailwind-ionic').plugin} */
+
 const ionic = require('@aparajita/tailwind-ionic')
 
 module.exports = {
@@ -84,6 +87,9 @@ module.exports = {
 If you pass the plugin a valid path to a CSS file containing Ionic theme variables, they are converted into Tailwind theme colors.
 
 ```javascript
+/** @type {import('tailwindcss/types').Config} */
+/** @type {import('@aparajita/tailwind-ionic').plugin} */
+
 const ionic = require('@aparajita/tailwind-ionic')
 
 module.exports = {
@@ -94,6 +100,9 @@ module.exports = {
 You may also pass the path as a `.theme` property of an options object, which you will need to do if you also want to set the `abbreviatedVariant` option. 
 
 ```javascript
+/** @type {import('tailwindcss/types').Config} */
+/** @type {import('@aparajita/tailwind-ionic').plugin} */
+
 const ionic = require('@aparajita/tailwind-ionic')
 
 module.exports = {
