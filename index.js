@@ -79,12 +79,12 @@ function getThemeColors(options) {
 }
 
 module.exports = plugin.withOptions(
-  function (options) {
+  (options) => {
     return function ({ addVariant }) {
       addVariants(addVariant, options)
     }
   },
-  function (options) {
+  (options) => {
     const variantOrder = [
       'plt-desktop',
       'plt-mobile',
