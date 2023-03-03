@@ -7,6 +7,10 @@ This plugin for [Tailwind CSS](https://tailwindcss.com/) and [Ionic](https://ion
 - Variants which help you to target specific platforms and modes in an Ionic application.
 - Ionic CSS theme variables are converted into Tailwind colors.
 
+## Breaking changes from v1.x
+- The non-abbreviated variants (prefixed with "ion-") in v1.x have been removed.
+- The `ios` and `md` variants have been renamed to `mode-ios` and `mode-md`, and only apply to the `mode` attribute of the `html` element.
+
 ## Installation
 
 ```shell
@@ -31,33 +35,16 @@ The variants in the table below are supported. Variants lower in the list are mo
 
 Note that you cannot combine variants directly, but you can combine the effect of separate variants.
 
-| Variant           | Target                                               |
-|:------------------|:-----------------------------------------------------|
-| ion-plt-desktop   | Desktop mode                                         |
-| ion-plt-mobile    | Mobile-like device (including browser simulations)   |
-| ion-plt-mobileweb | Mobile device simulation mode in a browser           |
-| ion-plt-native    | Real device using Capacitor                          |
-| ion-plt-ios       | iOS device (including browser simulations)           |
-| ion-plt-android   | Android device (including browser simulations)       |
-| ion-ios           | Element or closest parent is in iOS mode             |
-| ion-md            | Element or closest parent is in Material Design mode |
-
-#### Variant options
-
-By default the full variant names as shown above are used. If you would like to use abbreviated variant names without the `ion-` prefix, pass an options object to the plugin:
-
-```javascript
-/** @type {import('tailwindcss/types').Config} */
-/** @type {import('@aparajita/tailwind-ionic').plugin} */
-
-const ionic = require('@aparajita/tailwind-ionic')
-
-module.exports = {
-  plugins: [ionic({
-    abbreviatedVariants: true
-  })]
-}
-```
+| Variant       | Target                                             |
+|:--------------|:---------------------------------------------------|
+| plt-desktop   | Desktop mode                                       |
+| plt-mobile    | Mobile-like device (including browser simulations) |
+| plt-mobileweb | Mobile device simulation mode in a browser         |
+| plt-native    | Real device using Capacitor                        |
+| plt-ios       | iOS device (including browser simulations)         |
+| plt-android   | Android device (including browser simulations)     |
+| mode-ios      | App is in iOS style mode                           |
+| mode-md       | App is in Material Design style mode               |
 
 #### Examples (with abbreviated variant names)
 
@@ -97,7 +84,7 @@ module.exports = {
 }
 ```
 
-You may also pass the path as a `.theme` property of an options object, which you will need to do if you also want to set the `abbreviatedVariant` option. 
+You may also pass the path as a `.theme` property of an options object. 
 
 ```javascript
 /** @type {import('tailwindcss/types').Config} */
@@ -108,7 +95,6 @@ const ionic = require('@aparajita/tailwind-ionic')
 module.exports = {
   plugins: [ionic({
     theme: 'src/theme/variables.css',
-    abbreviatedVariants: true
   })]
 }
 ```

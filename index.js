@@ -11,27 +11,20 @@ const variants = [
   'plt-native:plt-capacitor',
   'plt-ios',
   'plt-android',
-  'ios',
-  'md'
+  'mode-ios',
+  'mode-md'
 ]
 
-function addVariants(add, options) {
-  const abbreviate = options?.abbreviateVariants
-
+function addVariants(add) {
   for (const variant of variants) {
     const parts = variant.split(':')
-    let variantName = parts[0]
-
-    if (!abbreviate) {
-      variantName = 'ion-' + variantName
-    }
-
-    let selector = `${parts[1] || parts[0]}`
+    const variantName = parts[0]
+    let selector = parts[1] || parts[0]
 
     if (selector.startsWith('plt-')) {
       selector = `html.${selector} &`
     } else {
-      selector = `.${selector} &`
+      selector = `html[mode="${selector}"] &`
     }
 
     add(variantName, selector)
@@ -92,11 +85,9 @@ module.exports = plugin.withOptions(
       'plt-native',
       'plt-ios',
       'plt-android',
-      'ios',
-      'md'
-    ].map((variant) =>
-      options?.abbreviateVariants ? variant : 'ion-' + variant
-    )
+      'mode-ios',
+      'mode-md'
+    ]
 
     return {
       theme: {
