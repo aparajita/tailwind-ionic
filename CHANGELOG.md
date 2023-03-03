@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.0.0](https://github.com/aparajita/tailwind-ionic/compare/v1.1.1...v2.0.0) (2023-03-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* - The non-abbreviated variants (prefixed with "ion-") in v1.x have been removed.
+- The `ios` and `md` variants have been renamed to `mode-ios` and `mode-md`, and only apply to the `mode` attribute of the `html` element.
+
+### Maintenance
+
+* ignore sonarlint stuff ([55ce7ba](https://github.com/aparajita/tailwind-ionic/commit/55ce7ba8135f4ebde1c6e7b7f142180ccc5500b2))
+* remove non-abbreviated variants, rename mode variants ([4f4e680](https://github.com/aparajita/tailwind-ionic/commit/4f4e6800e8abddad420d5bd5d49ae3b295e340f5))
+* update deps ([245157f](https://github.com/aparajita/tailwind-ionic/commit/245157fe5e87388fe120e29bc1fd744af9fd4ba2))
+
 ### [1.1.1](https://github.com/aparajita/tailwind-ionic/compare/v1.1.0...v1.1.1) (2022-08-29)
 
 
