@@ -24,7 +24,7 @@ function addVariants(add) {
     if (selector.startsWith('plt-')) {
       selector = `html.${selector} &`
     } else {
-      selector = `html[mode="${selector}"] &`
+      selector = `html[mode="${selector.split('-')[1]}"] &`
     }
 
     add(variantName, selector)
@@ -72,9 +72,9 @@ function getThemeColors(options) {
 }
 
 module.exports = plugin.withOptions(
-  (options) => {
+  () => {
     return function ({ addVariant }) {
-      addVariants(addVariant, options)
+      addVariants(addVariant)
     }
   },
   (options) => {
