@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.1.0](https://github.com/aparajita/tailwind-ionic/compare/v2.0.1...v2.1.0) (2023-03-30)
+
+
+### Features
+
+* add ion-checked and part variants ([ef2570e](https://github.com/aparajita/tailwind-ionic/commit/ef2570efd967917d7b05c2c77aa123402a5218c4))
+
 ## [2.0.1](https://github.com/aparajita/tailwind-ionic/compare/v2.0.0...v2.0.1) (2023-03-03)
 
 
