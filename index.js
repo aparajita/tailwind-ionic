@@ -1,3 +1,5 @@
+// noinspection JSCheckFunctionSignatures
+
 const fs = require('fs')
 const c = require('ansi-colors')
 const plugin = require('tailwindcss/plugin')
@@ -15,7 +17,7 @@ const variants = [
   'mode-md'
 ]
 
-function addVariants(add) {
+function addGlobalVariants(add) {
   for (const variant of variants) {
     const parts = variant.split(':')
     const variantName = parts[0]
@@ -73,8 +75,50 @@ function getThemeColors(options) {
 
 module.exports = plugin.withOptions(
   () => {
-    return function ({ addVariant }) {
-      addVariants(addVariant)
+    return function ({ addVariant, matchVariant }) {
+      addGlobalVariants(addVariant)
+      addVariant('ion-checked', ['&.checkbox-checked', '&.radio-checked'])
+      matchVariant(
+        'part',
+        (value) => {
+          return `&::part(${value})`
+        },
+        {
+          values: {
+            arrow: 'arrow',
+            backdrop: 'backdrop',
+            background: 'background',
+            bar: 'bar',
+            'bar-active': 'bar-active',
+            button: 'button',
+            'collapsed-indicator': 'collapsed-indicator',
+            'close-icon': 'close-icon',
+            container: 'container',
+            content: 'content',
+            'detail-icon': 'detail-icon',
+            expanded: 'expanded',
+            handle: 'handle',
+            header: 'header',
+            icon: 'icon',
+            image: 'image',
+            indicator: 'indicator',
+            'indicator-background': 'indicator-background',
+            knob: 'knob',
+            mark: 'mark',
+            message: 'message',
+            native: 'native',
+            pin: 'pin',
+            placeholder: 'placeholder',
+            progress: 'progress',
+            scroll: 'scroll',
+            separator: 'separator',
+            stream: 'stream',
+            text: 'text',
+            tick: 'tick',
+            track: 'track'
+          }
+        }
+      )
     }
   },
   (options) => {
@@ -86,7 +130,8 @@ module.exports = plugin.withOptions(
       'plt-ios',
       'plt-android',
       'mode-ios',
-      'mode-md'
+      'mode-md',
+      'ion-checked'
     ]
 
     return {

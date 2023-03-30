@@ -5,7 +5,9 @@
 This plugin for [Tailwind CSS](https://tailwindcss.com/) and [Ionic](https://ionic-framework.com) provides several features:
 
 - Variants which help you to target specific platforms and modes in an Ionic application.
+- A `part` variant to target CSS parts in an Ionic component (or any other component that uses CSS parts).
 - Ionic CSS theme variables are converted into Tailwind colors.
+- An `ion-checked` variant to target the checked state of an Ionic checkbox or radio button. 
 
 ## Breaking changes from v1.x
 - The non-abbreviated variants (prefixed with "ion-") in v1.x have been removed.
@@ -29,9 +31,9 @@ If you want to configure the behavior, read on.
 
 ## Usage
 
-### Variants
+### Platform/mode variants
 
-The variants in the table below are supported. Variants lower in the list are more specific and are applied after variants higher in the list. This means that a less specific variant applied to a given class will be overridden by a more specific variant applied to the same class.
+The platform/mode variants in the table below are supported. Variants lower in the list are more specific and are applied after variants higher in the list. This means that a less specific variant applied to a given class will be overridden by a more specific variant applied to the same class.
 
 Note that you cannot combine variants directly, but you can combine the effect of separate variants.
 
@@ -68,6 +70,79 @@ Note that you cannot combine variants directly, but you can combine the effect o
 <!-- GOOD. More specific variant overrides. On a real iOS device, red color. -->
 <ion-label class="plt-native:text-blue-500 plt-ios:text-red-500" />
 ```
+
+### Part variants
+
+The `part-` variant allows you to target CSS parts in an Ionic component (or any other component that uses CSS parts). All of the currently defined component parts are provided as auto-complete suggestions in your editor. Part variants can be combined with other variants.
+
+#### Examples
+
+```html
+<!-- Make a button fully rounded -->
+<ion-button class="part-native:rounded-full" />
+
+<!-- Equivalent to: -->
+<ion-button class="my-button" />
+
+<style>
+  .my-button::part(native) {
+    @apply rounded-full;
+  }
+</style>
+```
+
+### Checked variant
+
+The `ion-checked` variant allows you to target the checked state of an `ion-checkbox` or `ion-radio`. It can be combined with other variants, in particular the `part-` variant, to accomplish complex styling of `ion-checkbox` and `ion-radio` components entirely with Tailwind.
+
+#### Examples
+
+Here is a radio group using images for the radio buttons. The checked state is indicated by a blue ring.
+
+![Radio group with images](./example.png)
+
+Here is the markup:
+
+```html
+<ion-radio-group
+  v-model="appearance"
+  class="flex w-full justify-around pt-5 pb-3"
+>
+  <div
+    v-for="info in kAppearanceInfo"
+    :key="info.label"
+    class="relative flex flex-col items-center"
+  >
+    <ion-radio
+      :value="info.value"
+      class="m-0 h-[80px] w-[72px] rounded-lg part-container:border-none part-mark:hidden ion-checked:ring ion-checked:ring-blue-500"
+    />
+    <img
+      :src="info.src"
+      :alt="info.label"
+      class="absolute inset-0 h-[80px] w-[72px] rounded-lg border"
+      :class="info.class"
+    />
+    <p class="mt-2 text-sm text-ion-color-dark">
+      {{ info.label }}
+    </p>
+  </div>
+</ion-radio-group>
+```
+
+Or, for example, if you want a checkbox to be `yellow-500` in the unchecked state and `indigo-500` with an `indigo-400` border in the checked state, you would do this:
+
+```html
+<ion-checkbox
+  class="
+    part-container:!bg-yellow-500 
+    ion-checked:part-container:!bg-indigo-500 
+    ion-checked:part-container:!border-indigo-400
+  "
+/>
+```
+
+Note that `part-container` is used to target the checkbox markup itself and `!` is necessary to override the Ionic styles.
 
 ### Theme colors
 
