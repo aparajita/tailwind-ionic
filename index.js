@@ -115,6 +115,7 @@ module.exports = plugin.withOptions(
             stream: 'stream',
             text: 'text',
             tick: 'tick',
+            'tick-active': 'tick-active',
             track: 'track'
           }
         }
