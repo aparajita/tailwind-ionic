@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.2.0](https://github.com/aparajita/tailwind-ionic/compare/v2.1.0...v2.2.0) (2023-05-02)
+
+
+### Features
+
+* add tick-active part ([bfe1dd0](https://github.com/aparajita/tailwind-ionic/commit/bfe1dd000f0ea682e850ab780e1e0cb9c6d37ea7))
+
 ## [2.1.0](https://github.com/aparajita/tailwind-ionic/compare/v2.0.1...v2.1.0) (2023-03-30)
 
 
