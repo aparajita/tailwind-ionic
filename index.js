@@ -35,42 +35,50 @@ function addGlobalVariants(add) {
 
 function getThemeColors(options) {
   const vars = new Set()
-  let themePath = ''
+  let themePaths = []
 
   if (typeof options === 'string') {
-    themePath = options
+    themePaths = [options]
+  } else if (Array.isArray(options)) {
+    themePaths = options
   } else if (typeof options === 'object') {
-    themePath = options.theme ?? ''
+    if (options.theme) {
+      themePaths = [options.theme]
+    }
   }
 
-  if (themePath) {
-    try {
-      const theme = fs.readFileSync(themePath, 'utf8')
-      postcss.parse(theme).walkDecls(/^--ion-/u, (decl) => {
-        vars.add(decl.prop)
-      })
+  const colors = {}
 
-      const colors = {}
+  if (themePaths.length > 0) {
+    for (const themePath of themePaths) {
+      try {
+        const theme = fs.readFileSync(themePath, 'utf8')
+        postcss.parse(theme).walkDecls(/^--ion-/u, (decl) => {
+          vars.add(decl.prop)
+        })
 
-      vars.forEach((prop) => {
-        colors[prop.slice(2)] = `var(${prop})`
-      })
-
-      return colors
-    } catch (error) {
-      console.error(
-        `\n${c.red(
-          'error'
-        )} [${name}]: Could not parse theme file '${themePath}' (${
-          error.message
-        })`
-      )
+        vars.forEach((prop) => {
+          colors[prop.slice(2)] = `var(${prop})`
+        })
+      } catch (error) {
+        console.error(
+          `\n${c.red(
+            'error'
+          )} [${name}]: Could not parse theme file '${themePath}' (${
+            error.message
+          })`
+        )
+      }
     }
   } else {
-    console.error(`\n${c.red('error')} [${name}]: Theme path must be a string`)
+    console.error(
+      `\n${c.red(
+        'error'
+      )} [${name}]: Theme paths must be a string, an object with a '.theme' property, or an array of those types.`
+    )
   }
 
-  return {}
+  return colors
 }
 
 module.exports = plugin.withOptions(

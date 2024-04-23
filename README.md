@@ -146,7 +146,7 @@ Note that `part-container` is used to target the checkbox markup itself and `!` 
 
 ### Theme colors
 
-If you pass the plugin a valid path to a CSS file containing Ionic theme variables, they are converted into Tailwind theme colors.
+If you pass the plugin one or more valid paths to a CSS file containing Ionic theme variables, they are converted into Tailwind theme colors.
 
 ```javascript
 /** @type {import('tailwindcss/types').Config} */
@@ -159,7 +159,7 @@ module.exports = {
 }
 ```
 
-You may also pass the path as a `.theme` property of an options object. 
+You may also pass the path as a `.theme` property of an options object, or an array of strings or objects with a `.theme` property. This allows you to access the Ionic theme files along with your own customizations.
 
 ```javascript
 /** @type {import('tailwindcss/types').Config} */
@@ -171,6 +171,21 @@ module.exports = {
   plugins: [ionic({
     theme: 'src/theme/variables.css',
   })]
+}
+```
+
+```javascript
+/** @type {import('tailwindcss/types').Config} */
+/** @type {import('@aparajita/tailwind-ionic').plugin} */
+
+const ionic = require('@aparajita/tailwind-ionic')
+
+module.exports = {
+  plugins: [ionic([
+    'src/theme/variables.css',
+    'assets/css/theme.css',
+    require.resolve('@ionic/vue/css/palettes/dark.class.css'),
+  )]
 }
 ```
 
